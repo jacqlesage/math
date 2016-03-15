@@ -104,11 +104,11 @@ public class ArithmeticEtude {
             case 'N':
                 int output = InputObject.timesNumbersTogether(calc);
                 System.out.println("in output " + output);
-                if(output  > result){
+                if(output  < result){
                 
                     System.out.println("Impossible");
                 }
-                
+               
                 InputObject.addAllNumbersTogether(calc);
                 InputObject.testPairsOfNums(calc);
                 
