@@ -170,7 +170,7 @@ public class InputObject {
                             s[1] = temp +" " + "*"+ " "+ temp1 + " " + "+" + numIn.length;
                             
                             resultArray.add(s);
-                        }
+                        }else if((temp * temp1) * numIn.length == result){}
                     
                     }
                     
