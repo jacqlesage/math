@@ -5,7 +5,10 @@
  */
 package arithmeticetude;
 
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  *
@@ -135,6 +138,7 @@ public class InputObject {
             } else {
                 temp1 = Integer.parseInt(numIn[i + 1]);
 
+                //testing first number multiplied with second number
                 if (temp * temp1 > result && numIn[i] == numIn[0]) {
                 //then we know that that combination is bust - no use to us
                     //we then need to store those indexes, if it is the first number
@@ -148,9 +152,10 @@ public class InputObject {
                     
                     //then we want to move onto the next ? 
                     
+                    System.out.println("before main test statement");
                 }
-                
                 if (temp * temp1 < result) {
+                    System.out.println("inside temp*temp");
                     //then we want to use it 
                     //minus that from the result as a temp variable
                     //and try the other pairs if it is short we know that 
@@ -161,16 +166,40 @@ public class InputObject {
                     //either need to + or * the last number to see if we get 
                     //the correct answer if not we know that the selection we chose
                     //must be a +, now a *.
-                    if(temp1 == numIn.length-2)
-                    {
-                        if(temp * temp1 + numIn.length == result){
+                    
+                    //testing last numbers to complete string
+                    if(i == numIn.length-2){
+                        System.out.println("****checking last numbers statement ");
+                     
+                        
+                        System.out.println("temp * temp1 = " +temp * temp1);
+                        System.out.println("result " + result);
+                        System.out.println(Integer.valueOf(numIn[numIn.length-1]));
+                    
+                        if((temp * temp1) + Integer.valueOf(numIn[numIn.length-1]) == result){
+                           
+                            System.out.println("in + statement");
+                            
                             //then we know the last two number + this one makes 
                             //the result so add that piece to the string
                             String[] s = new String [1];
-                            s[1] = temp +" " + "*"+ " "+ temp1 + " " + "+" + numIn.length;
-                            
+                            s[1] = temp +" " + "*"+ " "+ temp1 + " " + "+" +  Integer.valueOf(numIn[numIn.length]);
+                                                        
                             resultArray.add(s);
-                        }else if((temp * temp1) * numIn.length == result){}
+                            //then we have tested the string so return the string - sort out below
+                            return 1;
+                            
+                        }else if((temp * temp1) * Integer.valueOf(numIn[numIn.length-1]) == result){
+                            System.out.println("in * statement");
+                            //the result so add that piece to the string
+                            String[] s = new String [1];
+                            s[1] = temp +" " + "*"+ " "+ temp1 + " " + "+" +  Integer.valueOf(numIn[numIn.length]);
+                                                        
+                            resultArray.add(s);
+                            //then we have tested the string so return the string - sort out below
+                            return 1;
+                        
+                        }
                     
                     }
                     
@@ -186,4 +215,104 @@ public class InputObject {
         return temp;
 
     }
+    
+    public static ArrayList testFirstPair(InputObject x) {
+        String[] numIn;
+        ArrayList<String[]> resultArray = new ArrayList<String[]>();
+        int result = x.getResult();
+        numIn = x.getNumIn();
+        int reducingResult = result;
+
+        if (Integer.valueOf(numIn[0]) * Integer.valueOf(numIn[1]) > result) {
+            //String start must be a plus
+            String[] s = new String[1];
+            s[0] = numIn[0] + " " + "+" + " " + numIn[1];
+            resultArray.add(s);
+            
+            System.out.println(s);
+
+        }
+
+        return resultArray;
+    }
+    
+    
+    public static void testOptions (InputObject x){
+
+        String[] numIn;
+        ArrayList<String[]> resultArray = new ArrayList<String[]>();
+        int result = x.getResult();
+        int temp = 0;
+        int temp1 = 0;
+       HashMap<Point, String> hashMap= new HashMap<Point, String>();
+        //int 
+        numIn = x.getNumIn();
+        int reducingResult = result;
+        
+        //could use test first pair here also
+        
+        //path one
+        if(Integer.valueOf(numIn[0]) * Integer.valueOf(numIn[1]) < result){
+            //we use it
+            String s;
+            s = numIn[0] + " " + "*" + " " + numIn[1];
+           // resultArray.add(s);
+        //reduce our target
+        reducingResult -= Integer.valueOf(numIn[0]) * Integer.valueOf(numIn[1]);
+        
+        //keep track of the indexs we * together and their value as string - hashmap ?
+        
+        hashMap.put(new Point(0,1), s);
+//        
+//        for(Point key : hashMap.keySet())
+//        {
+//            System.out.println(key + "** : **" + Arrays.deepToString(hashMap.get(key)));
+//                }
+        
+        //check if the next index is the last
+        
+        if(1+1 == numIn.length-1){
+        //the next block is the last then we just need to check our score - last value == 0
+            if(reducingResult - Integer.valueOf(numIn[numIn.length-1]) == 0){
+            
+            return;//return the string
+            }
+            
+            //if * it produces the same result
+            if(reducingResult * Integer.valueOf(numIn[numIn.length-1]) == result){
+            
+            return;//return the string
+            
+            }else {
+            
+                //go back to the hashMap and reverse the string sign 
+                String i = (String)hashMap.get(new Point(0,1));
+                System.out.println(i + "%%%%%%%%");
+                //reverse string sign and remove the second number
+                //String replace = Arrays.deepToString(i).toString();
+                 String r = i.replace('*', '+');
+                //System.out.println(replace);
+                 //place it back into the hashmap
+                 hashMap.replace(new Point(0,1), r);
+                //times the second number from this string with second num +1( the 3rd)
+                // System.out.println(r.charAt(r.length()-1));
+                 char a = r.charAt(r.length() -1);
+                 Integer q = Character.getNumericValue(a);
+                 System.out.println(q);
+                 
+                 
+                //try to calculate the answer again. 
+                
+            //we need to find out where the operations has gone wrong
+                
+                
+            }
+        
+        }
+        
+        }
+
+  }
+    
+    
 }
