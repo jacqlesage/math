@@ -274,12 +274,12 @@ public class InputObject {
         if(1+1 == numIn.length-1){
         //the next block is the last then we just need to check our score - last value == 0
             if(reducingResult - Integer.valueOf(numIn[numIn.length-1]) == 0){
-            
+            System.out.println("in here&&&&&&&");
             return;//return the string
             }
             
-            //if * it produces the same result
-            if(reducingResult * Integer.valueOf(numIn[numIn.length-1]) == result){
+            //if * it produces the same result - the below if is not correct
+            if((Integer.valueOf(numIn[0]) + Integer.valueOf(numIn[1])) * Integer.valueOf(numIn[numIn.length-1]) == result){
             
             return;//return the string
             
@@ -291,16 +291,39 @@ public class InputObject {
                 //reverse string sign and remove the second number
                 //String replace = Arrays.deepToString(i).toString();
                  String r = i.replace('*', '+');
-                //System.out.println(replace);
+                 String b = r.replace(r.charAt(4), ' ');
+                 
+                //System.out.println(b + "%%%%%%6^^");
                  //place it back into the hashmap
-                 hashMap.replace(new Point(0,1), r);
+                 hashMap.replace(new Point(0,1), b);
                 //times the second number from this string with second num +1( the 3rd)
                 // System.out.println(r.charAt(r.length()-1));
                  char a = r.charAt(r.length() -1);
                  Integer q = Character.getNumericValue(a);
                  System.out.println(q);
                  
+                 //now times the second number by the next numIn[i] index
+                 int w = q * Integer.valueOf(numIn[numIn.length-1]);
+                 System.out.println(w + "****");
+                 if (w < result){
+                     
+                     
+                     s = numIn[1] + " " + "*" + " " + numIn[2];
+                     //keep the string index numIn[1] +1
+                     hashMap.put(new Point(1,2), s);
+                     //then we need to use the string 
+                     System.out.println(); 
                  
+                 }
+                 
+                 if(w + Integer.valueOf(numIn[0]) == result){
+                     System.out.println("success");
+                     for(Point key : hashMap.keySet())
+        {
+            System.out.print(key + " : " + hashMap.get(key));
+                }
+                 
+                 }
                 //try to calculate the answer again. 
                 
             //we need to find out where the operations has gone wrong
